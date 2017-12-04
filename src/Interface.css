@@ -1,0 +1,19 @@
+/* 21 - Test for NAV
+ * CSS for Interface.js
+ * Forutsetter bruk av Bootstrap 3
+ *
+ * Per Olav Mariussen
+ * 04.12.2017
+ */
+
+.interface {
+    height:auto;
+    overflow: auto;
+    margin: 25px 0px;
+    background: rgba(0,0,0,0.1);
+    border-radius: 5px;
+    padding: 10px;
+}
+.alert>ul {
+	margin-bottom: 10px;
+}

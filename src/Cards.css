@@ -1,0 +1,18 @@
+/* 21 - Test for NAV
+ * CSS for Cards.js
+ *
+ * Per Olav Mariussen
+ * 01.12.2017
+ */
+
+.hand {
+	height:auto;
+    overflow: auto;
+}
+.card {
+	display: inline-block;
+	height: 185px;
+	width: 132px;
+	float: left;
+
+}

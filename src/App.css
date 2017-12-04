@@ -1,0 +1,13 @@
+/* 21 - Test for NAV
+ * Forutsetter bruk av Bootstrap 3
+ *
+ * Per Olav Mariussen
+ * 01.12.2017
+ */
+@import 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css';
+@import 'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css';
+
+footer {
+	margin-top: 1em;
+	text-align: center;
+}
