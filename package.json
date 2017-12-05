@@ -7,7 +7,7 @@
     "react-dom": "^16.2.0",
     "react-scripts": "1.0.17",
 	"jquery": "^3.2.1",
-    "react-bootstrap": "^0.31.5"
+    "react-bootstrap": "^0.31.5",
     "file-loader": "^1.1.5",
     "url-loader": "^0.6.2"
  },
