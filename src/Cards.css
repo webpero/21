@@ -8,11 +8,12 @@
 .hand {
 	height:auto;
     overflow: auto;
+	margin: auto;
+	display: table;
 }
 .card {
 	display: inline-block;
 	height: 185px;
 	width: 132px;
 	float: left;
-
 }

@@ -14,30 +14,35 @@ import './Interface.css';
 class ShowStatus extends Component
 {
     render() {
+		let newGameTxt = <span>Klikk for å starte <strong>Nytt spill</strong></span>;
+		
         switch(this.props.status) {
             case "playing":
-                return (<div className="alert alert-info" role="alert">Trekk nytt kort</div>);
+                return (<div className="alert alert-info btn btn-block" onClick={this.props.action} role="alert button">Klikk for å trekke <strong>Nytt kort</strong></div>);
             case "stop":
                 return (<div className="alert alert-info" role="alert">Magnus trekker kort...</div>);
  			case "win":
-                return (<div className="alert alert-success" role="alert">Du vant!</div>);
+                return (<div className="alert alert-success btn btn-block" onClick={this.props.action} role="alert button">Du vant! {newGameTxt}</div>);
             case "lose":
-                return (<div className="alert alert-danger" role="alert">Magnus vant!</div>);
+                return (<div className="alert alert-danger btn btn-block" onClick={this.props.action} role="alert button">Magnus vant! {newGameTxt}</div>);
             default:
                 return(
-					<div className="alert alert-info" role="alert">
-						<h1>Spill 21 med Magnus!</h1>
-						<p>Regler:</p>
-						<ul>
-							<li>Ess (A) er alltid 11, bildekort (K,Q,J) er 10, resten er pålydende</li>
-							<li>Magnus vinner hvis han får 21, lik, eller høyere poengsum enn deg</li>
-							<li>Hver spiller får først utdelt to kort</li>
-							<li>Deretter skal du trekke <strong>Nytt kort</strong> så lenge du ikke har fått 17 poeng eller mer</li>
-							<li>Deretter trekker Magnus til han får minst like mange poeng som deg, eller får mer enn 21</li>
-							<li>Ingen begrensinger på antall kort</li>
-							<li>Automatisk ny kortstokk når det er mindre enn 5 kort igjen, eller du klikker på <strong>Restart</strong></li>
-						</ul>
-						<p>Klikk på <strong>Nytt spill</strong> for å starte. Lykke til!</p>
+					<div className="alert alert-info btn btn-block" role="alert button" onClick={this.props.action} >
+						<h1 class="h1">Spill 21 med Magnus!</h1>
+						<p>
+							Magnus vinner på 21, lik, eller høyere poengsum enn deg.<br/>
+							Ess (A) er alltid 11, bildekort (K,Q,J) er 10.
+						</p>
+						<p>
+							Du og Magnus får først utdelt to kort hver.<br/>
+							Du trekker så <strong>Nytt kort</strong> til du har 17 poeng eller mer.<br/>
+							Deretter trekker Magnus til han han vinner eller taper.
+						</p>
+						<p>
+							Det er ingen begrensinger på antall kort.<br/>
+							Automatisk ny kortstokk når det er mindre enn 5 kort igjen.
+						</p>
+						<p>{newGameTxt} - Lykke til!</p>
 					</div>
 				);
         }
@@ -46,36 +51,28 @@ class ShowStatus extends Component
 export default class Interface extends Component
 {
     render() {
+		let status = this.props.status,
+			action = (status === "new" || status === "win" || status === "lose") ? this.props.dealCards :
+					 (status === "playing") ? this.props.newCard :
+					 null;
         return (
             <div className='interface'>
-                <ShowStatus status={this.props.status}/>
-                <div className="btn-group btn-group-justified" role="group" aria-label="Spillkontroller">
-					<div className="btn-group" role="group">
-						<button onClick={this.props.restart} type="button" className="btn btn-default">Restart</button>
-					</div>
-                    <div className="btn-group" role="group">
-                        <button onClick={this.props.dealCards} type="button" className="btn btn-info">Nytt spill</button>
-                    </div>
-                    <div className="btn-group" role="group">
-                        <button onClick={this.props.newCard} type="button" className="btn btn-success" disabled={this.props.status !== "playing"}>Nytt kort</button>
-                    </div>
+			
+                <div className="well text-center" aria-label="Magnus">
+					<Hand hand={this.props.dealer} />
+					<span class="h4"><strong>Magnus</strong> - Poengsum: <strong>{this.props.dealerScore}</strong> - Vunnet: <strong>{this.props.dealerWins}</strong></span>
+				</div>
+	
+	            <div className="controller" aria-label="Spillkontroll">
+					<ShowStatus status={status} action={action}/>	
+					<button className="btn btn-default btn-block" onClick={this.props.restart}>Start på nytt - Vis instruksjoner</button>
                 </div>
-                <div className="btn-group btn-group-justified" role="group" aria-label="Stillingen">
-                    <span className="btn btn-default">
-						<p>
-							Magnus: <strong>{this.props.dealerScore}</strong>&nbsp;
-							Vunnet: <strong>{this.props.dealerWins}</strong>
-						</p>
-						<Hand hand={this.props.dealer} />
-					</span>
-                    <span className="btn btn-default">
-						<p>
-							Spiller: <strong>{this.props.playerScore}</strong>&nbsp;
-							Vunnet: <strong>{this.props.playerWins}</strong>
-						</p>
-						<Hand hand={this.props.player} />
-					</span>
+				
+                <div className="well text-center" aria-label="Spiller">
+					<span class="h4"><strong>Spiller</strong> - Poengsum: <strong>{this.props.playerScore}</strong> - Vunnet: <strong>{this.props.playerWins}</strong></span>
+					<Hand hand={this.props.player} />
                 </div>
+				
 			</div>
         );
     }
