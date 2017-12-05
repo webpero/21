@@ -27,7 +27,7 @@ class ShowStatus extends Component
                 return (<div className="alert alert-danger btn btn-block" onClick={this.props.action} role="alert button">Magnus vant! {newGameTxt}</div>);
             default:
                 return(
-					<div className="alert alert-info btn btn-block" role="alert button" onClick={this.props.action} >
+					<div className="text-center">
 						<h1 class="h1">Spill 21 med Magnus!</h1>
 						<p>
 							Magnus vinner på 21, lik, eller høyere poengsum enn deg.<br/>
@@ -42,7 +42,9 @@ class ShowStatus extends Component
 							Det er ingen begrensinger på antall kort.<br/>
 							Automatisk ny kortstokk når det er mindre enn 5 kort igjen.
 						</p>
-						<p>{newGameTxt} - Lykke til!</p>
+						<div className="alert alert-info btn btn-block" role="alert button" onClick={this.props.action} >
+							<p>{newGameTxt} - Lykke til!</p>
+						</div>
 					</div>
 				);
         }
@@ -54,22 +56,23 @@ export default class Interface extends Component
 		let status = this.props.status,
 			action = (status === "new" || status === "win" || status === "lose") ? this.props.dealCards :
 					 (status === "playing") ? this.props.newCard :
-					 null;
+					 null,
+			restartButton = ((status != "new") ? <button className="btn btn-default btn-block" onClick={this.props.restart}>Start på nytt - Vis instruksjoner</button> : <span></span>);
         return (
             <div className='interface'>
 			
                 <div className="well text-center" aria-label="Magnus">
 					<Hand hand={this.props.dealer} />
-					<span class="h4"><strong>Magnus</strong> - Poengsum: <strong>{this.props.dealerScore}</strong> - Vunnet: <strong>{this.props.dealerWins}</strong></span>
+					<span class="h4"><strong>Magnus</strong> - Poengsum:&nbsp;<strong>{this.props.dealerScore}</strong> - Vunnet:&nbsp;<strong>{this.props.dealerWins}</strong></span>
 				</div>
 	
 	            <div className="controller" aria-label="Spillkontroll">
 					<ShowStatus status={status} action={action}/>	
-					<button className="btn btn-default btn-block" onClick={this.props.restart}>Start på nytt - Vis instruksjoner</button>
+						{restartButton}
                 </div>
 				
                 <div className="well text-center" aria-label="Spiller">
-					<span class="h4"><strong>Spiller</strong> - Poengsum: <strong>{this.props.playerScore}</strong> - Vunnet: <strong>{this.props.playerWins}</strong></span>
+					<span class="h4"><strong>Spiller</strong> - Poengsum:&nbsp;<strong>{this.props.playerScore}</strong> - Vunnet:&nbsp;<strong>{this.props.playerWins}</strong></span>
 					<Hand hand={this.props.player} />
                 </div>
 				
