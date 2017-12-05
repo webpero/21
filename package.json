@@ -8,7 +8,9 @@
     "react-scripts": "1.0.17",
 	"jquery": "^3.2.1",
     "react-bootstrap": "^0.31.5"
-  },
+    "file-loader": "^1.1.5",
+    "url-loader": "^0.6.2"
+ },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

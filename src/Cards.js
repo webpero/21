@@ -15,13 +15,9 @@ export class Card extends Component
 {
 	render() 
 	{
-		let cardUrl = 'url(img/' + this.props.suit.slice(0,1) + this.props.value + '.png)';
-		let	cardStyle = {backgroundImage: cardUrl};
 		return (
-            <div className='card' style={cardStyle}>
-				{this.props.suit.slice(0,1)+this.props.value}
-			</div>
-        );
+            <img className='card' src={ require("../img/" + this.props.suit.slice(0,1) + this.props.value + ".png") } />
+		);
 	}
 }
 export class Deck extends Component
