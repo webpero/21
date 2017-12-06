@@ -1,5 +1,5 @@
 # 21
-Versjon 0.9.1
+Versjon 0.9.2
 
 Spesiell versjon av 21 - "Spill 21 med Magnus"
 
