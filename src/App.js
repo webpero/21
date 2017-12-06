@@ -1,6 +1,6 @@
 /*
- *	21 - oppgave for NAV - Versjon 0.1.0
- *	04.12.2017: Per Olav Mariussen
+ *	21 - oppgave for NAV - Versjon 0.9.2
+ *	06.12.2017: Per Olav Mariussen
  *
  */
  
@@ -16,13 +16,13 @@ class App extends Component
 	constructor() {
 		super();
 		this.state = {
-            player: [],
-            dealer: [],
-			playerScore: 0,
-			dealerScore: 0,
-			playerWins: 0,
-			dealerWins: 0,
-            status: "new"
+            player: [],		//Spillers hånd, array av cards
+            dealer: [],		//Magnus' hånd, array av cards
+			playerScore: 0,	//Spillers score i denne runden
+			dealerScore: 0,	//Magnus' score i denne runden
+			playerWins: 0,	//Antall ganger spiller har vunnet
+			dealerWins: 0,	//Antall ganger Magnus har vunnet
+            status: "new"	//Status for spillet
 		};	
 	}
 	
@@ -85,7 +85,7 @@ class App extends Component
 		dealerHand.push(this.child.drawCard());
 		dealerScore = this._Score(dealerHand);
 		
-		//Sjekk for vinner og sett status
+		//Sett status og sjekk for vinner 
 		newStatus = (dealerScore === 21 || playerScore > 21 ) ? "lose" : 
 					(dealerScore > 21) ? "win" :
 					(playerScore >= 17) ? "stop" : 
@@ -128,7 +128,7 @@ class App extends Component
         playerHand.push(this.child.drawCard());
         newPlayerScore = this._Score(playerHand);
 
-		//Sjekk for vinner og sett status
+		//Sjekk for eventuelt tap og sett status
         if(newPlayerScore > 21) {
             newStatus = "lose";
 			dealerWins++;

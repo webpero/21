@@ -1,6 +1,6 @@
 /*
- *	21 - oppgave for NAV - Versjon 0.1.0
- *	04.12.2017: Per Olav Mariussen
+ *	21 - oppgave for NAV - Versjon 0.9.2
+ *	06.12.2017: Per Olav Mariussen
  *
  *  Håndtering av kort, kortstokk og en spillers hånd (samling av kort)
  *	Kan benyttes i flere typer kortspill
@@ -11,15 +11,22 @@ import $ from 'jquery';
 
 import './Cards.css';
 
-export class Card extends Component
+/* 	Ett kort. Functional Component (da komponenten ikke har state) */
+export function Card ( props )
 {
-	render() 
-	{
-		return (
-            <img className='card' src={ require("../img/" + this.props.suit.slice(0,1) + this.props.value + ".png") } />
-		);
-	}
+	/* 	
+		Bilde på kort ligger i /img på formen:
+		[Suit][Value].png 
+		Suit = C, S, D, H
+		Value = 2, 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A
+	*/
+	const card = props.suit.slice(0,1) + props.value;
+	return (
+		<img className='card' src={require("../img/"+card+'.png')} alt={card} />
+	);
 }
+
+/* En kortsokk */
 export class Deck extends Component
 {
 	constructor() {
@@ -30,6 +37,7 @@ export class Deck extends Component
 	}
 	  
 	componentDidMount() {
+		//Referanse til klassen, slik at metoder kan kalles fra parent
 		this.props.onRef(this);
 	}
 	componentWillUnmount() {
@@ -39,6 +47,7 @@ export class Deck extends Component
 		this._getCards();
 	}
 	
+	/* Metode som kalles fra parent */
 	drawCard() {
 		//Sjekk om vi trenger ny kortstokk
 		if ( this.state.cards.length < 5 ) {
@@ -47,6 +56,7 @@ export class Deck extends Component
 		return ( this.state.cards.pop() );
 	}
 	
+	/* Hent en tilfeldig stokket kortstokk */
 	_getCards() 
 	{
 		$.ajax({
@@ -62,27 +72,26 @@ export class Deck extends Component
 
 	render() 
 	{
+		// Velger å la kortstokken være skjult 
 		return (
             <div />
         );
 	}
 }
-export class Hand extends Component
+
+/* 
+	En spillers hånd (ett eller flere kort) 
+	Functional Component (da komponenten ikke har state)
+*/
+export function Hand ( props )
 {
-	static get defaultProps(){
-        return {
-            hand : []
-        }
-    }
-	render() {
-		return(
-			<div className='hand'>
-				{
-					this.props.hand.map(function(card,i){
-						return <Card suit={card.suit} value={card.value} key={i}/>
-					})
-				}
-            </div>
-		);
-	}
+	return(
+		<div className='hand'>
+			{
+				props.hand.map(function(card,i){
+					return <Card suit={card.suit} value={card.value} key={i}/>
+				})
+			}
+		</div>
+	);
 }
